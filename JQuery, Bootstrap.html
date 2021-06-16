@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css">
+<title>JQuery, Bootstrap</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div id="JQuery"><h1 id="JQuery" class="header"><a href="#JQuery">JQuery</a></h1></div>
+
+<p>
+библиотека функций созднаная Джоном Резигом в 2006 году. Библиотека дает возможность работы с объектной моделью документа, с событиями, умеет создавать визуальные эффекты, работает с сетью (AJAX).Также существует большое количество плагинов для этой библиотеки.
+</p>
+
+<p>
+Вся работ с библиотекой строится через функцию $ - это просто функция в глобальной области видимости. Эту функцию можно использовать следующим образом:
+</p>
+
+<p>
+Если передать в эту функцию CSS селектор, то она вернет специальный jQuery объект. Пример:
+</p>
+<pre javascript>
+    $("div.main").addClass("hidden") // найти div с классом main и добавить ему класс hidden
+</pre>
+
+<p>
+Можно выстраивать длинные цепочки из подобных вызовов.
+</p>
+
+<p>
+Работа с аттрибутами элементов. Метод attr.
+</p>
+<pre javascript>
+    $("a").attr("href", "example.com") // установит атрабут hrefу ссылки в example.com
+
+    $("a").attr("href") //вернет значение атрибута href
+</pre>
+
+<p>
+Когда метод jQuery вызывается с некоторым значением, он действует как сеттер - меняет значение, когда он же вызывается без аргументов он действует как геттер - возвращает значение.
+</p>
+
+<div id="JQuery-Манипулирование элементами."><h2 id="Манипулирование элементами." class="header"><a href="#JQuery-Манипулирование элементами.">Манипулирование элементами.</a></h2></div>
+
+<p>
+Методы
+</p>
+
+<p>
+.html() - возвращает или устанавливает содержимое элемента
+</p>
+
+<p>
+.text() - возвращает или устанавливает текстовое содержимое документа
+</p>
+
+<p>
+.width() - возвращает или устанавливает ширину элемента
+</p>
+
+<p>
+.height() - возвращает или устанавливает высоту элемента
+</p>
+
+<p>
+.val() - возвращает или устанавливает значение элемента формы.
+</p>
+
+<p>
+.insertAfter - вставляет выделение после указанной цели
+</p>
+
+<p>
+.remove - удаляет элемент
+</p>
+
+<p>
+.append -добавляет элемент
+</p>
+
+<p>
+Примеры
+</p>
+
+<pre javascript>
+
+    $("#main").html("&lt;h1&gt;Hello world!&lt;/h1&gt;"); установит содержимое элемента с id=main
+
+    $("p.first).text("Lorem Ipsum"); установит текст внутри параграфа
+
+    $("#footer).height(300);// изменит высоту
+
+    $('input').val(1234); // установит значение поля в форме
+
+    $('&lt;p&gt;Hello&gt;/p&gt;').insertAfter('p'); // вставить параграф с "Hello" после каждого параграфа на странице
+
+    $('main').remove('.spam'); //удалит из элемента main все объекты с классом spam
+
+    $("&lt;p&gt;Good day!&lt;/p&gt;") создаст параграф
+
+    $("ul.some").append("&lt;li&gt;One more&lt;/li&gt;"); Добавит пункт к списку
+</pre>
+
+<div id="JQuery-Методы обхода."><h2 id="Методы обхода." class="header"><a href="#JQuery-Методы обхода." class="justcenter">Методы обхода.</a></h2></div>
+ 
+<p>
+ При выборе элемента или элементов можно двигаться дальше внутри этого элемента: находить дочерние. узлы или родительский узел. Примеры из документации jQuery.
+</p>
+  
+<pre>
+    &lt;div class="grandparent"&gt;
+      &lt;div class="parent"&gt;
+        &lt;div class="child"&gt;
+          &lt;span class="subchild"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class="surrogateParent1"&gt;&lt;/div&gt;
+      &lt;div class="surrogateParent2"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+</pre>
+
+<p>
+// Выборродительскогоэлемента:
+</p>
+
+<p>
+// возвращает [ div.child ]
+</p>
+
+<p>
+$( "span.subchild" ).parent();
+</p>
+
+<p>
+// Выборвсех родительских элементов подходящих под селектор div.parent
+</p>
+
+<p>
+// возвращает [ div.parent ]
+</p>
+
+<p>
+$( "span.subchild" ).parents( "div.parent" );
+</p>
+
+<p>
+// возвращет [ div.child, div.parent, div.grandparent ]
+</p>
+
+<p>
+$( "span.subchild" ).parents();
+</p>
+
+<p>
+// Возвращаетвсеродительскиеэлемент, ноневключая div.grandparent
+</p>
+
+<p>
+// возвращает [ div.child, div.parent ]
+</p>
+
+<p>
+$( "span.subchild" ).parentsUntil( "div.grandparent" );
+</p>
+
+<p>
+// Selecting the closest parent, note that only one parent will be selected
+</p>
+
+<p>
+// Выборближайшего родителя подходящего под селектор
+</p>
+
+<p>
+// возвращает [ div.child ]
+</p>
+
+<p>
+$( "span.subchild" ).closest( "div" );
+</p>
+
+<p>
+// возвращает [ div.parent, div.surrogateParent1, div.surrogateParent2 ]
+</p>
+
+<p>
+$( "div.grandparent" ).children( "div" );
+</p>
+
+<p>
+// Находитвсеэлементывнутривыделенияподходящиеподселектор
+</p>
+
+<p>
+// возвращает [ div.child, div.parent, div.surrogateParent1, div.surrogateParent2 ]
+</p>
+
+<p>
+$( "div.grandparent" ).find( "div" );
+</p>
+
+<ol>
+<li>
+Вспомогательные методы
+
+</ol>
+
+<p>
+.trim - удаляет пробелы в начале и в конце строки
+</p>
+
+<p>
+.each - перебирает массивы и объекты
+</p>
+
+<p>
+.isArray -проверяет является ли параметр массивом
+</p>
+
+<p>
+.isFunction - проверяет являтся ли параметр функцией
+</p>
+
+<p>
+.isNumeric - проверяет является ли параметр числом
+</p>
+
+<p>
+Примеры:
+</p>
+
+<p>
+$.trim(". hello. ") // =&gt; "hello"
+</p>
+
+<p>
+$.each([1, 2, 3], function(index, value) {
+</p>
+
+<p>
+console.log(value);
+</p>
+
+<p>
+}// Выведет все 3 элемента
+</p>
+
+<p>
+$.isArray([1,2,3]) // =&gt; true
+</p>
+
+<p>
+$.isArray(33) // =&gt; false
+</p>
+
+<p>
+$.isFunction(function() {}) // =&gt; true
+</p>
+
+<p>
+$.isFunction(33) // =&gt; false
+</p>
+
+<p>
+$.isNumeric(23) // =&gt; true
+</p>
+
+<p>
+$.isNumeric("eee") // =&gt; false
+</p>
+
+<div id="Вопросы:"><h1 id="Вопросы:" class="header"><a href="#Вопросы:">Вопросы:</a></h1></div>
+
+<ol>
+<li>
+Что будет выбрано следующим выражением?
+
+</ol>
+
+<p>
+$("div")
+</p>
+
+<ul>
+<li class="done4">
+Все элементы div на странице
+
+<li class="done0">
+Первый элемент div на странице
+
+<li class="done0">
+Не будет выбрано ничего
+
+</ul>
+
+<ol>
+<li>
+Как получить значение атрибута src
+
+</ol>
+
+<ul>
+<li class="done0">
+$.getAttribute('src')
+
+<li class="done4">
+$.attr('src')
+
+<li class="done0">
+$.get('src')
+
+<li class="done0">
+$.attribute('src')
+
+</ul>
+
+<ol>
+<li>
+Как установить атрибут style
+
+</ol>
+
+<ul>
+<li class="done0">
+$.setAttribute('style', "border:solid 10px red");
+
+<li class="done0">
+$.set('style', "border:solid 10px red");
+
+<li class="done4">
+$.attr('style', "border:solid 10px red");
+
+</ul>
+
+<ol>
+<li>
+Как вывести элементы массива в консоль (console.log) ?
+
+</ol>
+
+<ul>
+<li class="done0">
+$.forEach([1,2,3], function (index, value) { console.log(value); })
+
+<li class="done4">
+$.each([1,2,3], function (index, value) { console.log(value); })
+
+<li class="done0">
+$.traverse([1,2,3], function (index, value) { console.log(value); })
+
+<li class="done0">
+$.walk([1,2,3], function (index, value) { console.log(value); })
+
+</ul>
+
+<p>
+5.Какая функция берёт значение из текстового поля?
+</p>
+
+<ul>
+<li class="done0">
+text()
+
+<li class="done0">
+html()
+
+<li class="done0">
+value()
+
+<li class="done4">
+val()
+
+</ul>
+
+<ol>
+<li>
+Какой метод сделает все div с шириной 100 px?
+
+</ol>
+
+<ul>
+<li class="done4">
+$("div").width(100);
+
+<li class="done0">
+$("div").width(100px);
+
+<li class="done0">
+$("div").width = 100px;
+
+<li class="done0">
+$("div").width = "100px";
+
+</ul>
+
+<ol>
+<li>
+Где выбран только первый div?
+
+</ol>
+
+<p>
+<div id="first">Text</div>
+</p>
+
+<p>
+<div class="first">Text 2</div>
+</p>
+
+<p>
+<div>Text 3</div>
+</p>
+
+<ul>
+<li class="done0">
+$("div")
+
+<li class="done0">
+$("div.first")
+
+<li class="done0">
+$(".first")
+
+<li class="done4">
+$("#first")
+
+</ul>
+
+<ol>
+<li>
+Какой код добавляет задний фон?
+
+</ol>
+
+<ul>
+<li class="done0">
+$("p").bg ("red");
+
+<li class="done0">
+$("p").background ("red");
+
+<li class="done0">
+$("p").style ("background", "red");
+
+<li class="done0">
+$("p").layout ("background", "red");
+
+<li class="done4">
+$("p").css ("background", "red");
+
+</ul>
+
+<ol>
+<li>
+Где выбран только первый div с классом «first»?
+
+</ol>
+
+<p>
+<div id="first">Text</div>
+</p>
+
+<p>
+<div class="first">Text 2</div>
+</p>
+
+<p>
+<div>Text 3</div>
+</p>
+
+<p>
+<div class="first">Text 4</div>
+</p>
+
+<ul>
+<li class="done0">
+$("div.first")
+
+<li class="done0">
+$("div.first div")
+
+<li class="done4">
+$( "div.first" ).first()
+
+<li class="done0">
+$("div.first:first")
+
+</ul>
+
+<ol>
+<li>
+В чем отличие между функциями html () и text ()?
+
+</ol>
+
+<ul>
+<li class="done0">
+Никаких отличий между ними нет
+
+<li class="done0">
+В функцию html () надо помещать только html код, а в текст можно HTML и просто текст
+
+<li class="done0">
+Если поместить в text () html код, то будет ошибка
+
+<li class="done4">
+При добавлении HTML через функцию html() всё сработает, а при добавлении  HTML в функцию text() они не будут обработаны
+
+</ul>
+
+<div id="Задачи:"><h1 id="Задачи:" class="header"><a href="#Задачи:">Задачи:</a></h1></div>
+
+<ol>
+<li>
+Найдите все теги p на странице и измените у них все цвет на #ff0000
+
+</ol>
+
+<ol>
+<li>
+Создайте неупорядоченный список из 3х элементов и добавьте его на страницу.
+
+</ol>
+
+<ol>
+<li>
+Создайте параграф с текстом и добавьте его на страницу.
+
+</ol>
+
+<ol>
+<li>
+Добавьте всем картинкам на странице класс preview.
+
+</ol>
+
+<div id="Bootstrap"><h1 id="Bootstrap" class="header"><a href="#Bootstrap">Bootstrap</a></h1></div>
+
+<p>
+Bootstrap - набор инструментов для создания сайтов и веб приложений. Содержит стили, разметку и скрипты для создания компонентов. 
+</p>
+
+<p>
+Bootstrap часто используется для прототипирования приложение (но не только). Позволяет отложить принятие решений о дизайне приложения и сосредоточиться на функциональности. Чтобы не пересказывать официальную документацию, предлагаю посмотреть на <a href="https://bootstrap-4.ru">https://bootstrap-4.ru</a> или  <a href="https://getbootstrap.com">https://getbootstrap.com</a> (на английском языке). 
+</p>
+
+<p>
+Основные инструменты Bootstrap: (взято из <a href="https://ru.wikipedia.org)">https://ru.wikipedia.org)</a>
+</p>
+
+<p>
+Сетки — заранее заданные размеры колонок, которые можно сразу же использовать, например, ширина колонки 140 px относится к классу .span2 (.col-md-2 в третьей версии фреймворка), который можно использовать в CSS-описании документа.
+</p>
+
+<p>
+Шаблоны — фиксированный или резиновый шаблон документа.
+</p>
+
+<p>
+Типографика — описания шрифтов, определение некоторых классов для шрифтов, таких как код, цитаты и т. п.
+</p>
+
+<p>
+Медиа — предоставляет некоторое управление изображениями и видео.
+</p>
+
+<p>
+Таблицы — средства оформления таблиц, вплоть до добавления функциональности сортировки.
+</p>
+
+<p>
+Формы — классы для оформления форм и некоторых событий, происходящих с ними.
+</p>
+
+<p>
+Навигация — классы оформления для панелей, вкладок, перехода по страницам, меню и панели инструментов.
+</p>
+
+<p>
+Алерты — оформление диалоговых окон, подсказок и всплывающих окон.
+</p>
+
+
+<div id="Вопросы"><h1 id="Вопросы" class="header"><a href="#Вопросы">Вопросы</a></h1></div>
+
+<ol>
+<li>
+Зачем нужен Bootstrap и почему просто не использовать HTML + CSS ?
+
+</ol>
+
+<ul>
+<li class="done4">
+Bootstrap позволяет быстро собрать приложение из готовых компонентов и стилей
+
+<li class="done4">
+Bootstrap позволяет вообще не думать о стилях и разметке, позволяет полностью абстрагироваться от них
+
+<li class="done4">
+Bootstrap позволяет создавать не только типовые но и кастомные дизайны для приложения
+
+</ul>
+
+<ol>
+<li>
+Что не входит в Bootstrap ?
+
+</ol>
+
+<ul>
+<li class="done0">
+Формы
+
+<li class="done0">
+Типографика
+
+<li class="done0">
+Сетки
+
+<li class="done4">
+Компоненты для сложных гридов и деревьев
+
+<li class="done4">
+Компоненты для работы с календарем
+
+<li class="done4">
+Компоненты для построения меню
+
+</ul>
+
+<ol>
+<li>
+По каким соображениям не стоит использовать  Bootstrap ?
+
+</ol>
+
+<ul>
+<li class="done4">
+Нужен сайт с уникальным дизайном
+
+<li class="done4">
+Требуется сайт с минимальным набором стилей и скриптов для быстрой загрузки
+
+<li class="done0">
+Он не поддерживает дизайн для мобильных устройств
+
+<li class="done0">
+Он не содержит готовые компоненты
+
+</ul>
+
+
+<div id="Задачи"><h1 id="Задачи" class="header"><a href="#Задачи">Задачи</a></h1></div>
+
+<ol>
+<li>
+Создайте страницу с разделением на 3 колонки. Первая колонка должны быть в 3 раза больше остальных колонок. Остальные 2 колонки должны быть одинакового размера. Между колонками необходимо задать произвольные отступы.
+
+</ol>
+
+<ol>
+<li>
+Сверстайте любую таблицу из 5 столбцов и 3 строк. Для таблицы задайте бордюры. Сделайте так, чтобы при движении указателя мыши через таблицу, строки выделялись.
+
+</ol>
+
+<ol>
+<li>
+Сверстайте форму для входа с полями: логин и пароль. Добавьте на форму кнопку "Войти". 
+
+</ol>
+
+</body>
+</html>

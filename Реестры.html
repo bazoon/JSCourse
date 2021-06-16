@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css">
+<title>Реестры</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div id="Пример реестра"><h1 id="Пример реестра" class="header"><a href="#Пример реестра">Пример реестра</a></h1></div>
+
+<p>
+Реестры в ExtJS обычно создаются на основе компонентов Ext.grid.Panel (таблица) или
+</p>
+
+<p>
+Ext.grid.Tree (дерево). Реестры служат для отображения табличной информации. Они имеют колонки, строки, поддерживают множество плагинов для инлайн редактирования, группировки, сортировки и другие. Реестры имеют множество возможностей для кастомизации отображения строк или отдльных ячеек. Данные можно фильтровать и сортировать.
+</p>
+
+<p>
+Для создания реестра необходимо хранилище (store) и набор колонок.
+</p>
+
+<p>
+Хранилище - это объект для хранения данных. Минимально нужно указать набор данных
+</p>
+
+<p>
+следующим образом:
+</p>
+<pre javascript>
+  
+    Ext.create('Ext.data.Store', {
+      data: [{
+        name: 'Lisa',
+        email: 'lisa@simpsons.com',
+        phone: '555-111-1224'
+      },
+      {
+        name: 'Bart',
+        email: 'bart@simpsons.com',
+        phone: '555-222-1234'
+      },
+      {
+        name: 'Homer',
+        email: 'homer@simpsons.com',
+        phone: '555-222-1244'
+      },
+      {
+        name: 'Marge',
+        email: 'marge@simpsons.com',
+        phone: '555-222-1254'
+      }
+    ]
+  });
+</pre>
+
+<p>
+Будет создано хранилище с четырьмя записями.
+</p>
+
+<p>
+Для задания колонок в реестре используется свойство columns.
+</p>
+<pre javascript>
+    columns: [
+      {
+        text: 'Name', //Текст который будет у колонки
+        dataIndex: 'name' // индекс в хранилище
+      },
+      {
+        text: 'Email',
+        dataIndex: 'email',
+        flex: 1,
+        editor: {
+          field: {
+            xtype: 'textfield'
+          }
+        }
+      },
+      {
+        text: 'Phone',
+        dataIndex: 'phone',
+        flex: 1
+      }
+    ];
+</pre>
+
+<p>
+Пример реестра полностью
+</p>
+<pre javascript>
+  
+    Ext.application({
+
+      name: 'Fiddle',
+
+      launch: function() {
+
+        Ext.define('MyViewController', {
+
+          extend: 'Ext.app.ViewController',
+
+          alias: 'controller.users',
+
+
+          onReload: function() {
+
+            const u = {
+
+              name: 'Lisa',
+
+              email: 'lisa@simpsons.com',
+
+              phone: '555-111-1224'
+
+            };
+
+            this.getView().getStore().add(u);
+
+          }
+
+        });
+
+        Ext.create('Ext.data.Store', {
+
+          storeId: 'simpsonsStore',
+
+          fields: ['name', 'email', 'phone'],
+
+          data: [{
+
+            name: 'Lisa',
+
+            email: 'lisa@simpsons.com',
+
+            phone: '555-111-1224'
+
+          },
+
+            {
+
+              name: 'Bart',
+
+              email: 'bart@simpsons.com',
+
+              phone: '555-222-1234'
+
+            },
+
+            {
+
+              name: 'Homer',
+
+              email: 'homer@simpsons.com',
+
+              phone: '555-222-1244'
+
+            },
+
+            {
+
+              name: 'Marge',
+
+              email: 'marge@simpsons.com',
+
+              phone: '555-222-1254'
+
+            }
+
+          ]
+
+        });
+
+        Ext.create('Ext.grid.Panel', {
+
+          title: 'Simpsons',
+
+          controller: 'users',
+
+          store: Ext.data.StoreManager.lookup('simpsonsStore'),
+
+          tbar: [{
+
+            xtype: 'button',
+
+            text: 'Reload',
+
+            handler: 'onReload'
+
+          }],
+
+          plugins: {
+
+            ptype: 'cellediting',
+
+            clicksToEdit: 1
+
+          },
+
+          columns: [
+            {
+
+              text: 'Name',
+
+              dataIndex: 'name'
+
+            },
+            {
+
+              text: 'Email',
+
+              dataIndex: 'email',
+
+              flex: 1,
+
+              editor: {
+
+                field: {
+
+                  xtype: 'textfield'
+
+                }
+
+              }
+
+            },
+            {
+
+              text: 'Phone',
+
+              dataIndex: 'phone',
+
+              flex: 1
+
+            }
+
+          ],
+
+          height: 300,
+
+          width: '100%',
+
+          renderTo: Ext.getBody()
+
+        });
+      }
+    });
+</pre>
+
+<p>
+Ссылки:
+</p>
+
+<p>
+<a href="https://docs.sencha.com/extjs/6.7.0/classic/Ext.grid.Panel.html">https://docs.sencha.com/extjs/6.7.0/classic/Ext.grid.Panel.html</a> - реестр
+</p>
+
+<p>
+Пример:
+</p>
+
+<p>
+<a href="https://examples.sencha.com/extjs/6.2.0/examples/kitchensink/#grids">https://examples.sencha.com/extjs/6.2.0/examples/kitchensink/#grids</a> - варианты
+</p>
+
+<p>
+<a href="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all.js">https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all.js</a>
+</p>
+
+<p>
+<a href="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/classic/theme-classic/resources/theme-classic-all.css">https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/classic/theme-classic/resources/theme-classic-all.css</a>
+</p>
+
+
+<p>
+Дерево
+</p>
+
+<p>
+Деревья похожи на реестры. В них также можно показывать табличные данные, но также можно показывать иерархически организованные данные. В качестве источника данных используется древовидный вариант хранилища - Ext.data.TreeStore. Данные в нем задаются как массив объектов, каждый из которых может содержать другой массив объектов. Пример:
+</p>
+
+<pre javascript>
+    [
+
+      { text: 'detention', leaf: true },
+
+      { text: 'homework', expanded: true,
+
+        children: [
+
+          { text: 'book report', leaf: true },
+
+          { text: 'algebra', leaf: true}
+
+        ]
+
+      },
+
+      { text: 'buy lottery tickets', leaf: true }
+
+    ]
+</pre>
+<p>
+Элемент с текстом 'detention' является "листом" дерева - то есть не имеет дочерних записей. Элемент с текстом 'homework' имеет 2 дочерние записи, каждая из которых тоже лист.
+</p>
+
+<p>
+Компонент дерева способен показывать глубоковложенные структуры, при этом дочерние записи показываются под родительскими с отступом слева.
+</p>
+
+<p>
+Примеры: <a href="https://examples.sencha.com/extjs/6.2.0/examples/kitchensink/#trees">https://examples.sencha.com/extjs/6.2.0/examples/kitchensink/#trees</a>
+</p>
+
+<p>
+Для дерева можно также задавать столбцы. Делается это аналогично реестру. Но, в отличие от реестра, их можно и не задавать и получится дерево с одним столбцом.
+</p>
+
+
+
+<div id="Маски"><h1 id="Маски" class="header"><a href="#Маски">Маски</a></h1></div>
+
+<p>
+Маска - элемент закрывающий и блокирующий другой компонент. Служит для ограничения работы с компонент. Когда маска включена, компонент не доступен для взаимодействия - на него нельзя нажать, его нельзя выбрать, нельзя сфокусироваться на нем.
+</p>
+
+<p>
+Для задания маски используется метод mask.Для того чтобы убрать маску используется метод unmask. Пример:
+</p>
+<pre javascript>
+    const grid = this.getGrid();
+    grid.mask(); // маскируем реестр
+    grid.unmask(); //убираем маску
+</pre>
+
+<p>
+Обычно маски используются на время загрузки или обновления данных. Например при первоначальной загрузке реестра он блокируется маской пока не будут загружены данные.
+</p>
+
+<div id="Фокус"><h1 id="Фокус" class="header"><a href="#Фокус">Фокус</a></h1></div>
+
+<p>
+Компоненты в ExtJS способны принимать фокус. Когда компонент сфокусирован он способен взаимодействовать с пользователем - например реагировать на нажатия клавиш. Сфокусированные элементы обычно имеют выделение. Для ручной фокусировки используется метод focus. Он есть у всех компонентов, но не на каждый компонент можно сфокусироваться.
+</p>
+
+<div id="Вопросы:"><h1 id="Вопросы:" class="header"><a href="#Вопросы:">Вопросы:</a></h1></div>
+
+<ol>
+<li>
+Для чего используются реестры?
+
+</ol>
+
+<ul>
+<li class="done0">
+Для отображения иерархических данных
+
+</ul>
+
+<ul>
+<li class="done0">
+Для отображения табличных данных
+
+</ul>
+
+
+<ol>
+<li>
+Какие из возможностей есть у реестра?
+
+</ol>
+
+<ul>
+<li class="done4">
+Сортировка
+
+<li class="done4">
+Фильтрация
+
+<li class="done0">
+Печать реестра
+
+<li class="done0">
+Выгрузка реестра в PDF формат
+
+</ul>
+
+
+<ol>
+<li>
+Каким образом реестр получает данные?
+
+</ol>
+
+<ul>
+<li class="done0">
+Данные описываются внутри объявления реестра
+
+<li class="done4">
+Данные храняться в специальном объекте типа Store
+
+<li class="done0">
+Данные передаются в реестр через специальный метод.
+
+</ul>
+
+<ol>
+<li>
+Каким образом настроить столбцы реестра?
+
+</ol>
+
+<ul>
+<li class="done0">
+После создания объекта реестра вызвать у него метод addColumn.
+
+<li class="done4">
+Задать столбцы в разделе columns при описании класса реестра.
+
+<li class="done0">
+Колонки не нужно задавать, они автоматически подхватываются из данных.
+
+</ul>
+
+
+<ol>
+<li>
+Для чего используются маски?
+
+</ol>
+
+<ul>
+<li class="done0">
+Для скрытия элементов
+
+<li class="done4">
+Для ограничения работы с компонентом
+
+</ul>
+
+<ol>
+<li>
+Как создать/убрать маску на элементе ?
+
+</ol>
+
+<ul>
+<li class="done0">
+Вызвать метод showMask/hideMask
+
+<li class="done4">
+Вызвать метод mask/unmask
+
+<li class="done0">
+Вызывать ничего не нужно, маски появляются/исчезают автоматически
+
+</ul>
+
+<ol>
+<li>
+Что означает для элемента быть в фокусе ?
+
+</ol>
+
+<ul>
+<li class="done0">
+Виден только этот элемент, остальные скрыты
+
+<li class="done4">
+Элемент выделен и способен взаимодействовать с пользователем
+
+<li class="done0">
+У элемента "моргает" курсор.
+
+</ul>
+
+
+<ol>
+<li>
+Для чего может использоваться дерево?
+
+</ol>
+
+<ul>
+<li class="done4">
+) Для отображения иерархических данных
+
+<li class="done0">
+) Для отображения произвольных данных
+
+<li class="done0">
+) Для отображения табличных данных
+
+</ul>
+
+
+<ol>
+<li>
+В дереве можно показать и просто табличные данные
+
+</ol>
+
+<ul>
+<li class="done4">
+да
+
+<li class="done0">
+нет
+
+</ul>
+
+<ol>
+<li>
+Как показываются разные уровни дерева?
+
+</ol>
+
+<ul>
+<li class="done0">
+Размером шрифта
+
+<li class="done4">
+Отступом
+
+<li class="done4">
+Визуально родительские записи стоят выше, дочерние сразу под ними
+
+</ul>
+
+
+<div id="Задачи"><h1 id="Задачи" class="header"><a href="#Задачи">Задачи</a></h1></div>
+
+<ol>
+<li>
+Создать произвольный реестр для описания списка студентов с полями: ФИО, возраст, курс, Дата поступления
+
+<li>
+Показать маску у созданного реестра на 10 секунд (для скрытия по истечении времени можно использовать функцию setTimeout)
+
+<li>
+Показать диалоговое окно с двумя полями для ввода текста и кнопкой. По нажатию кнопки фокус должен переходить от одного поля к другому и обратно.
+
+<li>
+Создать дерево с тремя уровнями вложенности. Например описать хранение книг: Комната -&gt; Шкаф -&gt; Полка 
+
+</ol>
+
+</body>
+</html>

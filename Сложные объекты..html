@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css">
+<title>Сложные объекты.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div id="Объекты"><h1 id="Объекты" class="header"><a href="#Объекты">Объекты</a></h1></div>
+
+<div id="Объекты-1. Для хранения сложных сущностей в JS используются объекты. Объект представляет собой хранилизе по типу ключ-значение. Для создания объекта можно использовать два способа:"><h2 id="1. Для хранения сложных сущностей в JS используются объекты. Объект представляет собой хранилизе по типу ключ-значение. Для создания объекта можно использовать два способа:" class="header"><a href="#Объекты-1. Для хранения сложных сущностей в JS используются объекты. Объект представляет собой хранилизе по типу ключ-значение. Для создания объекта можно использовать два способа:">1. Для хранения сложных сущностей в JS используются объекты. Объект представляет собой хранилизе по типу ключ-значение. Для создания объекта можно использовать два способа:</a></h2></div>
+<pre javascript>
+
+  a) let rectangle = {}; // литерал объекта - предпочтительная форма создания объекта
+
+  b) let rectangle = new Object(); //конструктор объекта
+
+</pre>
+
+<p>
+При создании объекта можно сразу задать его свойства:
+</p>
+<pre javascript>
+    let rectangle = {
+
+    width: 100,
+
+    height: 200
+
+    color: 'red'
+
+    };
+</pre>
+
+<p>
+Имя свойства является произвольной строкой - это может быть целое предложение:
+</p>
+<pre javascript>
+    let a = {
+
+    "very long property name": 200
+
+    };
+</pre>
+
+<p>
+Теперь в объекте два свойства: width со значением 100 и height со значением 200. Для обращения к свойствам можно использовать два способа:
+</p>
+<pre javascript>
+    a) rectangle.width // обычно используется конструкция с точкой
+
+    b) rectangle['width'] // удобно использовать, когда имя свойства содержит пробелы
+</pre>
+
+<p>
+Вычисляемые свойства. Иногда имя свойства неизвестно, но, содержится, например в переменной. Тогда можно использовать следующий синтаксис:
+</p>
+<pre javascript>
+    let a = "name";
+
+    let obj = {
+
+      [a]: "John"
+
+    };
+</pre>
+
+<p>
+Будет создан объект { name: "Jhon" }
+</p>
+
+<p>
+Проверка на наличие свойства в объекте. Для того чтобы проверить есть ли свойство у объекта используется оператор in.
+</p>
+<pre javascript>
+    let point = {
+
+    x: 100,
+
+    y: 200
+
+    };
+
+    'x' in point // true
+
+    'z' in point // false
+</pre>
+
+<p>
+Проверить можно также просто обратившись к свойству, например
+</p>
+
+<p>
+if (point.x) { ..} но если свойство имеет "ложное" значение - равно 0 или null или undefined или пустой строке, то такой if не сработает.
+</p>
+
+<p>
+Также у объекта есть метод hasOwnProperty:
+</p>
+<pre javascript>
+    point.hasOwnProperty('x') // true
+
+    point.hasOwnProperty('z') // false
+</pre>
+
+<p>
+Оператор in и hasOwnProperty отличаются тем, что в случае с in поиск свойства происходит не только в самом объекте, но в и его цепочке прототипа (об этом чуть дальше).
+</p>
+
+<p>
+Удаление свойств. Используется оператор delete.
+</p>
+<pre javascript>
+    delete point.x // удалит свойство x
+</pre>
+
+<p>
+Перебор свойств объекта. Для перебора всех свойств объекта ипользуется конструкция
+</p>
+<pre javascript>
+    for ... in:
+
+    let animal = {
+
+    legs: 4,
+
+    head: 1,
+
+    hands: 2
+
+    };
+
+    for(let p in animal) {
+
+    console.log(p); // выведет 'legs', 'head', 'hands'
+
+    }
+</pre>
+
+<p>
+Получение списка свойств. Метод Object.keys.
+</p>
+<pre javascript>
+    let apple = {
+
+    size: 'big',
+
+    color: 'red'
+
+    };
+
+    Object.keys(apple); // ['size', 'color'] - список свойств
+</pre>
+
+<p>
+Копирование объектов. Ссылки.
+</p>
+
+<p>
+В отличие от примитивов объекты хранятся и копируются по ссылке. Например:
+</p>
+<pre javascript>
+    let a = 100;
+
+    let b = a;// теперь будет 2 переменные каждая из которых хранит число 100, но у каждой свое число, если мы изменим одну переменную:
+
+    a = 99
+
+    то b не изменится
+</pre>
+
+<p>
+Но в случае с объектами все происходит не так. Переменная с объектом хранит не сам объект, а ссылку на него. Если скопировать ссылку, то новый объект не будет создан, а будет две переменные, которые указывают на один и тот же объект.
+</p>
+<pre javascript>
+    let user = { name: 'Tom' };
+
+    let somebody = user;
+
+    user.name = "John";
+
+    somebody.name // John
+</pre>
+
+<p>
+Чтобы скопировать объект можно использовать фукнцию Object.assign.
+</p>
+<pre javascript>
+    let user = { name: 'Tom'};
+
+    let somebody = Object.assign({}, user);
+
+    user.name = "John"
+
+    somebody.name // "Tom" -теперь это отдельный объект, изменение свойства user на него не влияет
+</pre>
+
+<p>
+Важный момент - при копировании будут скопированы все свойства объекта, но если эти свойства ссылаются на объекты, то вложенные объекты не будут полностью пересозданы. Скопируются только ссылки.
+</p>
+<pre javascript>
+    let user = {
+
+    address: {
+
+    city: "Moscow",
+
+    street: "Red Square
+
+    },
+
+    name: "John"
+
+    }
+
+    let somebody = Object.assign({}, user);
+
+    user.city = "London";
+
+    somebody.city // "London -объекты user и somebody все еще делят между собой объект с адресом. Точнее,свойство address у них ссылается на один и тот же объект.
+</pre>
+
+<div id="Объекты-2.Классы. Долгое время до принятия стандарта ES6 в языке не было понятия класса. Для создания похожего поведения использовались функции конструкторы."><h2 id="2.Классы. Долгое время до принятия стандарта ES6 в языке не было понятия класса. Для создания похожего поведения использовались функции конструкторы." class="header"><a href="#Объекты-2.Классы. Долгое время до принятия стандарта ES6 в языке не было понятия класса. Для создания похожего поведения использовались функции конструкторы.">2.Классы. Долгое время до принятия стандарта ES6 в языке не было понятия класса. Для создания похожего поведения использовались функции конструкторы.</a></h2></div>
+<pre javascript>
+    function Car(name, color, speed) {
+
+    this.name = name;
+
+    this.color = color;
+
+    this.speed = speed;
+
+    };
+
+    let car = new Car("Lada", "white", 100); // для создания объекта используется оператор new
+
+    будет создан объект вида
+
+    {
+      name: "Lada",
+      color: "white",
+      speed": 100
+    }
+</pre>
+
+<p>
+Может показаться, что зачем такие сложности, если можно создать более простым способом. Однако, с помощью функций-конструкторов можно создавать объекты, которые содержат не только данные но и поведение.
+</p>
+<pre javascript>
+    function Car(name, color, speed) {
+      this.name = name;
+      this.color = color;
+      this.speed = speed;
+    };
+
+    Car.prototype.drive = function() {
+      console.log(this.name " is driving!");
+    }
+
+    Car.prototype.beep = function() {
+      console.log(this.name " BEEP BEEP");
+    }
+
+    let car = new Car("Lada", "white", 100);
+
+    car.drive();
+
+    car.beep();
+</pre>
+
+<p>
+Контекст. В JS существует понятие контекста - к нему обращаются через ключевое слово this. Обычно this используется внутри функции и ссылается на объект. Существуют правила по которым можно определить куда именно this ссылается. Эти правила существенно отличаются от других языков и их понимание очень важно.
+</p>
+
+<ol>
+<li>
+Когда используется ключевое слово new. При создании объекта посредством new, внутри функции конструктора this ссылается на создаваемый объект.
+<pre javascript>
+    function Car(name, color, speed) {
+      this.name = name;
+      this.color = color;
+      this.speed = speed;
+    };
+
+    let car = new Car("Lada", "white", 100); // здесь car это тот самый объект, который был создан. this внутри Car ссылается тоже на него.
+</pre>
+
+</ol>
+
+<ol>
+<li>
+Использование функций apply, call, bind -эти функции позволяют задать контекст явно.
+<pre javascript>
+    let car = { name: "Lada" };
+    function sayMyName() {
+      console.log(this.name);
+    }
+
+    sayMyName.call(car); // вызываем функцию c контекстом ссылающимся на car -будет выведено "Lada"
+</pre>
+
+</ol>
+
+<ol>
+<li>
+Использование функции как "метода".
+<pre javascript>
+    let car= {
+      name: "Lada",
+      drive: function() {
+        console.log(this.name + "driving!");
+      }
+    };
+
+    car.drive(); // this внутри drive будет ссылаться на car
+</pre>
+
+</ol>
+
+<ol>
+<li>
+Функция вызывается как обычно.
+<pre javascript>
+    function sayHello() {
+
+    console.log(this.name);
+
+    }
+
+    sayHello(); // this будет ссылаться на глобальный объект (зависит от окружения). В браузере это window. Лучше не использовать this таким образом.
+</pre>
+
+</ol>
+
+<p>
+Правила расположены в порядке приоритета, верхние более приоритетные.
+</p>
+
+<p>
+Начиная с ES6 в языке появилась конструкция для объявления "классов". Эта конструкция являетсяпочти синтаксическим сахаром (есть отличия) для функции конструктора.
+</p>
+<pre javascript>
+    class Car() {
+
+    constructor(name, color, speed) {
+
+    this.name = name;
+
+    this.color = color;
+
+    this.speed = speed;
+
+    }
+
+    drive () {
+
+    console.log(this.name " is driving!");
+
+    }
+
+    beep() {
+
+    console.log(this.name " BEEP BEEP");
+
+    }
+
+    }
+
+    let car = new Car("Lada", "white", 100);
+
+    car.drive();
+
+    car.beep();
+</pre>
+
+<div id="Объекты-Прототипы."><h2 id="Прототипы." class="header"><a href="#Объекты-Прототипы.">Прототипы.</a></h2></div>
+
+<p>
+Объекты имеют специальное скрытое свойство <a href="Prototype.html">Prototype</a>. Оно либо null, либо ссылается на другой объект. Этот другой объект называется прототип. Для того, чтобы получить значение этого свойства используется свойства _<em>proto</em>_ или Object.getPrototypeOf (предпочтительнее). Для установки также можно использовать свойство _<em>proto</em>_или Object.setPrototypeOf. Пример
+</p>
+<pre javascript>
+    a) let a = { b: 100 };
+
+    let b = { c: 10 };
+
+    a.__proto__ = b; // теперь объект b прототип объекта a
+
+    b) Object.setPrototypeOf(a, b) // аналогично
+</pre>
+
+<p>
+Объект прототип используется для поиска свойств, которых нет в самом объекте. Когда мы обращаемся к свойству объекта, происходит поиск этого свойства в объекте, далее, если свойство не найдено, поиск идет в прототипе,если и там не найдено, то в прототипе прототипа, и далее пока не дойдет до объекта, у которого протипа нет (null).
+</p>
+
+<p>
+Такое поведение используется для организации прототипного наследования. Например:
+</p>
+<pre javascript>
+    let point = { x: 100, y: 200 };
+
+    let point3D = { z: 400 };
+
+    Object.setPrototypeOf(point, point3D);
+
+    console.log(point.z) // 400 - z нашелся в прототипе
+</pre>
+
+<p>
+Аналогичным образом вызываются и функции, если функция не найдена в объекте, поиск будет продолжен в его прототипе.
+</p>
+<pre javascript>
+    let point = {
+      x: 100,
+      y: 200,
+    };
+
+    let screen = {
+      draw: function() {
+        console.log("Draw " + this.x + ", " + this.y);
+      }
+    }
+
+    Object.setPrototypeOf(point, screen);
+    point.draw();
+</pre>
+<p>
+При использовании классов происходит примерно тоже самое. Методы, объявленные внутри класса и доступные у созданных объектов, ищутся в прототипе созданных объектов. Пример:
+</p>
+<pre javascript>
+    class Box {
+
+    getWidth() {}
+
+    }
+
+    let box = new Box();
+
+    box.getWidth(); // свойства getWidth нет в самом объекте box,но оно есть в его прототипе
+
+    console.log(b.__proto__.getWidth) // выведет [Function: getWidth] - ссылка на функцию
+
+</pre>
+<p>
+Важно. Поиск в прототипе происходит только при чтении свойств. При записи свойств, они будут записаны в сам объект, не в прототип.
+</p>
+
+<div id="Объекты-Массивы"><h2 id="Массивы" class="header"><a href="#Объекты-Массивы">Массивы</a></h2></div>
+
+<p>
+В JavaScript для работы с наборами данных используется объект типа Array. Он имеет методы для добавления, уделения, фильтрации, поиска элементов. Чтобы создать объект такого типа обычно используется следующая форма:
+</p>
+<pre javascript>
+    const a = [1, 2, 3, 4, 5];
+</pre>
+
+<p>
+Для добавления элемента в массив используется метод push:
+</p>
+<pre javascript>
+    const a = [1, 2, 3, 4, 5]
+    a.push(10);
+    console.log(a) // [1, 2, 3, 4, 5, 10]
+</pre>
+
+
+<p>
+Для доступа к элементам используются квадратные скобки:
+</p>
+
+<pre javascript>
+    console.log(a[3]) // 4
+</pre>
+
+<p>
+чтобы отфильтровать элементы в массиве используется метод filter. Метод возвращает новый массив с отфильтрованными элементами. Исходный массив при этом не изменяется.
+</p>
+
+<pre javascript>
+    a.filter(a =&gt; a &gt; 3) // [4, 5]метод вернет новый массив
+</pre>
+
+<p>
+У масства есть свойство length:
+</p>
+
+<pre javascript>
+    [1, 2, 3].length // 3
+</pre>
+
+<div id="Вопросы:"><h1 id="Вопросы:" class="header"><a href="#Вопросы:">Вопросы:</a></h1></div>
+
+<p>
+1 Какой из способов создания объекта неправильный?
+</p>
+
+<ul>
+<li class="done0">
+let a = { b: 100};
+
+</ul>
+
+<ul>
+<li class="done0">
+let a = new Object();
+
+</ul>
+
+<ul>
+<li class="done4">
+let a = { b = 100 };
+
+</ul>
+
+<ul>
+<li class="done4">
+a = { b =&gt; 100 };
+
+</ul>
+
+<ol>
+<li>
+Что будет выведено ?
+<pre javascript>
+    let a = { b: 100 };
+    for(let p in a) {
+      console.log(typeof p); //
+    }
+</pre>
+
+</ol>
+
+<ul>
+<li class="done0">
+'number'
+
+<li class="done4">
+'string'
+
+<li class="done0">
+100
+
+<li class="done0">
+'b'
+
+</ul>
+
+<ol>
+<li>
+Что будет выведено ?
+<pre javascript>
+    let foo = {
+      x: 100
+    };
+    let bar = {
+      y: 200
+    };
+    foo.__proto__ = bar;
+    for (let p in foo) {
+     console.log(p);
+    }
+</pre>
+
+</ol>
+
+<ul>
+<li class="done0">
+'x'
+
+<li class="done0">
+'y'
+
+<li class="done4">
+'x' 'y'
+
+</ul>
+
+<ol>
+<li>
+Что будет выведено ? Объекты из пункта 3.
+
+</ol>
+
+<p>
+console.log(foo.hasOwnProperty('y')
+</p>
+
+<ul>
+<li class="done4">
+false
+
+<li class="done0">
+true
+
+</ul>
+
+<ol>
+<li>
+Что будет выведено ? Объекты из пункта 3.
+
+</ol>
+
+<p>
+console.log(foo.hasOwnProperty('x')
+</p>
+
+<ul>
+<li class="done0">
+false
+
+<li class="done4">
+true
+
+</ul>
+
+<ol>
+<li>
+Что будет выведено?
+<pre javascript>
+    let a = {
+      b: 100,
+      inside: {
+        c: 200
+      }
+    };
+
+    let copy = Object.assign({}, a);
+    copy.inside.c = 300;
+    console.log(a.inside.c, copy.inside.c);
+</pre>
+
+</ol>
+
+<ul>
+<li class="done0">
+200 300
+
+<li class="done0">
+200 200
+
+<li class="done0">
+300 200
+
+<li class="done4">
+300 300
+
+</ul>
+
+<ol>
+<li>
+Что будет выведено?
+<pre javascript>
+    let aa = {
+      b: 100,
+      f: function() {
+        console.log(this.b);
+      }
+    }
+    aa.f();
+</pre>
+
+</ol>
+
+<ul>
+<li class="done4">
+100
+
+<li class="done0">
+undefined
+
+</ul>
+
+<ol>
+<li>
+Что будет выведено?
+
+</ol>
+
+<pre javascript>
+    let a2 = {
+      b: 100,
+      f: function() {
+        console.log(this.b);
+      }
+    }
+
+    let foo = a2.f;
+    foo();
+</pre>
+
+<ul>
+<li class="done0">
+100
+
+<li class="done4">
+undefined
+
+</ul>
+
+<ol>
+<li>
+Что будет выведено?
+
+</ol>
+
+<pre javascript>
+    let a = {
+      b: 100,
+      f: function() {
+        console.log(this.b);
+      }
+    };
+
+    let b = {
+      b: 200
+    };
+
+    b.f = a.f;
+
+    b.f()
+</pre>
+
+
+<ul>
+<li class="done0">
+100
+
+<li class="done0">
+undefined
+
+<li class="done4">
+200
+
+</ul>
+
+<ol>
+<li>
+Что будет выведено ?
+
+</ol>
+
+<pre javascript>
+    var square = {
+      side_length: 4,
+      area: function () {
+        var l = this.side_length;
+        return l * l;
+      }
+    }
+    console.log(square.area());
+</pre>
+
+<ul>
+<li class="done0">
+4
+
+<li class="done0">
+undefined
+
+<li class="done4">
+16
+
+</ul>
+
+<ol>
+<li>
+Что будет выведено?
+<pre javascript>
+    var yao = {
+      self: function () { return this }
+    }
+
+    console.log(yao === yao.self());
+</pre>
+
+</ol>
+  
+<ul>
+<li class="done0">
+false
+
+<li class="done4">
+true
+
+<li class="done0">
+undefined
+
+</ul>
+
+<p>
+Задачи
+</p>
+
+<ol>
+<li>
+Напишите функцию, которая выведет только собственные свойства объекта
+
+</ol>
+
+<ol>
+<li>
+Напишите функцию, которая принимает объект, и возвращает другой объект в котором, свойства это значения из принятого объекта, а значения имена свойств. Пример:
+
+</ol>
+
+<p>
+Если на входе { b: "c", d: "e"}, то на выходе будет { c: "b", e: "d"}
+</p>
+
+<ol>
+<li>
+Выведите значения всех свойств объекта.
+
+</ol>
+
+<ol>
+<li>
+Создайте класс Rectangle (прямоуголник), который бы создавал объекты вида { x1: 100, y1: 100, x2: 200, y2: 200 }и имел бы метод для вычисления площади. Пример:
+<pre javascript>
+    const r = new Rectangle(100, 100, 200, 200);
+
+    console.log(r.square());// =&gt; 10000
+</pre>
+
+</ol>
+
+<ol>
+<li>
+Есть код:
+<pre javascript>
+    let point = {
+      x: 100,
+      y: 200
+    };
+</pre>
+
+</ol>
+
+<p>
+Сделайте так, чтобы можно было вызвать метод draw следующим образом. Объявление объекта не менять.
+</p>
+
+<pre javascript>
+    point.draw();
+</pre>
+
+</body>
+</html>
